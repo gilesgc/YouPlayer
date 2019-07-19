@@ -1,9 +1,9 @@
 Package: com.gilesgc.youplayer
 Name: YouPlayer
-Depends: mobilesubstrate, com.muirey03.libimagepicker
-Version: 0.0.1
+Depends: mobilesubstrate, me.nepeta.libcolorpicker, com.muirey03.libimagepicker
+Version: 1.0.0
 Architecture: iphoneos-arm
-Description: An awesome MobileSubstrate tweak!
+Description: Customize the YouTube video player icon and colors
 Maintainer: gilesgc
 Author: gilesgc
 Section: Tweaks

@@ -4,7 +4,10 @@
 #import <libcolorpicker.h>
 
 static BOOL tweakIsEnabled = YES;
+static BOOL iconIsEnabled = YES;
+static BOOL gradientIsEnabled = YES;
 static BOOL didSetCustomViews = NO;
+
 static UIImageView *playerBarIcon;
 static CAGradientLayer *gradient;
 static UIColor *progressBarLeftColor;
@@ -15,6 +18,9 @@ static void loadPrefs() {
     NSDictionary *prefs = [NSDictionary dictionaryWithContentsOfFile:@"/var/mobile/Library/Preferences/com.gilesgc.youplayer.plist"];
     
     tweakIsEnabled = [prefs objectForKey:@"isEnabled"] ? [[prefs objectForKey:@"isEnabled"] boolValue] : YES;
+    iconIsEnabled = [prefs objectForKey:@"iconIsEnabled"] ? [[prefs objectForKey:@"iconIsEnabled"] boolValue] : YES;
+    gradientIsEnabled = [prefs objectForKey:@"gradientIsEnabled"] ? [[prefs objectForKey:@"gradientIsEnabled"] boolValue] : YES;
+
     playerBarIcon = [prefs objectForKey:@"playerIcon"] ? 
         [[UIImageView alloc] initWithImage:LIPParseImage([prefs objectForKey:@"playerIcon"])] : nil;
     iconSizeMultiplier = [prefs objectForKey:@"iconSizeMultiplier"] ? [[prefs objectForKey:@"iconSizeMultiplier"] floatValue] : 1.5f;
@@ -33,32 +39,35 @@ static void loadPrefs() {
     if(!tweakIsEnabled)
         return playerBar;
     
-    if(playerBarIcon && !didSetCustomViews) {        
-        [[playerBar scrubberCircle] setHidden:YES];
+    if(!didSetCustomViews) {
+        if(iconIsEnabled && playerBarIcon) {
+            [[playerBar scrubberCircle] setHidden:YES];
 
-        //Preserve image ratio when setting size
-        float iconSizeRatio = [[playerBarIcon image] size].height / [[playerBarIcon image] size].width;
-        CGRect newFrame = [playerBar scrubberCircle].bounds;
-        newFrame.size.height *= iconSizeMultiplier;
-        newFrame.size.width = newFrame.size.height / iconSizeRatio;
-        [playerBarIcon setFrame:newFrame];
+            //Preserve image ratio when setting size
+            float iconSizeRatio = [[playerBarIcon image] size].height / [[playerBarIcon image] size].width;
+            CGRect newFrame = [playerBar scrubberCircle].bounds;
+            newFrame.size.height *= iconSizeMultiplier;
+            newFrame.size.width = newFrame.size.height / iconSizeRatio;
+            [playerBarIcon setFrame:newFrame];
 
-        //Replace the circle UIView with a UIImageView so that it will have the same behavior but with an image
-        MSHookIvar<UIView *>(playerBar, "_scrubberCircle") = playerBarIcon;
-        [playerBar addSubview:playerBarIcon];
+            //Replace the circle UIView with a UIImageView so that it will have the same behavior but with an image
+            MSHookIvar<UIView *>(playerBar, "_scrubberCircle") = playerBarIcon;
+            [playerBar addSubview:playerBarIcon];
+        }
+        if(gradientIsEnabled) {
+            //Set progress bar gradient
+            UIView *progressBar = MSHookIvar<UIView *>(playerBar, "_playingProgress");
 
-        //Set progress bar gradient
-        UIView *progressBar = MSHookIvar<UIView *>(playerBar, "_playingProgress");
+            gradient = [CAGradientLayer layer];
+            gradient.frame = [[UIScreen mainScreen] bounds];
+            gradient.colors = @[(id)progressBarLeftColor.CGColor, (id)progressBarRightColor.CGColor];
+            gradient.startPoint = CGPointMake(0.0, 0.5);
+            gradient.endPoint = CGPointMake(1.0, 0.5);
 
-        gradient = [CAGradientLayer layer];
-        gradient.frame = [[UIScreen mainScreen] bounds];
-        gradient.colors = @[(id)progressBarLeftColor.CGColor, (id)progressBarRightColor.CGColor];
-        gradient.startPoint = CGPointMake(0.0, 0.5);
-        gradient.endPoint = CGPointMake(1.0, 0.5);
-
-        //Clip gradient so it only shows on progress bar
-        [progressBar.layer addSublayer:gradient];
-        [progressBar setClipsToBounds:YES];
+            //Clip gradient so it only shows on progress bar
+            [progressBar.layer addSublayer:gradient];
+            [progressBar setClipsToBounds:YES];
+        }
 
         didSetCustomViews = YES;
     }

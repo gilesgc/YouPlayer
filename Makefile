@@ -1,5 +1,7 @@
 INSTALL_TARGET_PROCESSES = SpringBoard
 
+PACKAGE_VERSION=$(THEOS_PACKAGE_BASE_VERSION)
+
 include $(THEOS)/makefiles/common.mk
 
 TWEAK_NAME = YouPlayer

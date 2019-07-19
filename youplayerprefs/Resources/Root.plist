@@ -10,19 +10,33 @@
 			<key>default</key>
 			<true/>
 			<key>defaults</key>
-			<string>com.gilesgc.pivot</string>
+			<string>com.gilesgc.youplayer</string>
 			<key>key</key>
 			<string>isEnabled</string>
 			<key>label</key>
 			<string>Enable tweak</string>
 			<key>PostNotification</key>
-			<string>com.gilesgc.pivot/prefChanged</string>
+			<string>com.gilesgc.youplayer/prefChanged</string>
 		</dict>
 		<dict>
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Player icon</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.gilesgc.youplayer</string>
+			<key>key</key>
+			<string>iconIsEnabled</string>
+			<key>label</key>
+			<string>Custom icon enabled</string>
+			<key>PostNotification</key>
+			<string>com.gilesgc.youplayer/prefChanged</string>
 		</dict>
 		<dict>
 			<key>cell</key>
@@ -85,6 +99,20 @@
 			<string>PSGroupCell</string>
 			<key>label</key>
 			<string>Progress bar gradient</string>
+		</dict>
+		<dict>
+			<key>cell</key>
+			<string>PSSwitchCell</string>
+			<key>default</key>
+			<true/>
+			<key>defaults</key>
+			<string>com.gilesgc.youplayer</string>
+			<key>key</key>
+			<string>gradientIsEnabled</string>
+			<key>label</key>
+			<string>Gradient enabled</string>
+			<key>PostNotification</key>
+			<string>com.gilesgc.youplayer/prefChanged</string>
 		</dict>
 		<dict>
 			<key>label</key>
