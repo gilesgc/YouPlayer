@@ -1,6 +1,6 @@
 Package: com.gilesgc.youplayer
 Name: YouPlayer
-Depends: mobilesubstrate
+Depends: mobilesubstrate, com.muirey03.libimagepicker
 Version: 0.0.1
 Architecture: iphoneos-arm
 Description: An awesome MobileSubstrate tweak!
