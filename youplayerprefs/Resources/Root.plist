@@ -84,11 +84,11 @@
 			<key>cell</key>
 			<string>PSGroupCell</string>
 			<key>label</key>
-			<string>Player bar color</string>
+			<string>Progress bar gradient</string>
 		</dict>
 		<dict>
 			<key>label</key>
-			<string>Choose player bar color</string>
+			<string>Gradient color 1 (left)</string>
 			<key>libcolorpicker</key>
 			<dict>
 				<key>alpha</key>
@@ -96,7 +96,28 @@
 				<key>fallback</key>
 				<string>#FF0000</string>
 				<key>key</key>
-				<string>playerColor</string>
+				<string>leftColor</string>
+				<key>defaults</key>
+				<string>com.gilesgc.youplayer.color</string>
+			</dict>
+			<key>cellClass</key>
+			<string>PFSimpleLiteColorCell</string>
+			<key>cell</key>
+			<string>PSLinkCell</string>
+			<key>PostNotification</key>
+			<string>com.gilesgc.youplayer/prefChanged</string>
+		</dict>
+		<dict>
+			<key>label</key>
+			<string>Gradient color 2 (right)</string>
+			<key>libcolorpicker</key>
+			<dict>
+				<key>alpha</key>
+				<true/>
+				<key>fallback</key>
+				<string>#FF0000</string>
+				<key>key</key>
+				<string>rightColor</string>
 				<key>defaults</key>
 				<string>com.gilesgc.youplayer.color</string>
 			</dict>
